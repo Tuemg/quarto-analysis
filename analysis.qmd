@@ -1,0 +1,129 @@
+---
+title: "My Quarto Analysis"
+format: html
+---
+
+## **Text and images**
+
+You can add text here just like a word processor.
+
+![](images/Composition%20Workflow-1.png){width="640"}
+
+## Equations
+
+The equation is $E = mc^2$. Mix of text and Math as, The mean of the numbers is $\bar{x} = `r mean(c(1,2,3))`$.
+
+### Numbered equations
+
+$$
+E = mc^2
+$$ {#eq-energy}
+
+### Reference it:
+
+See Equation @eq-energy.
+
+### Aligned equations
+
+Equations can align as : $$
+\begin{aligned}
+y &= mx + b \\
+z &= ax^2 + bx + c
+\end{aligned}
+$$
+
+## Tables
+
+### A. Simple Markdown Tables
+
+| Name | Age | Score |
+|------|-----|-------|
+| John | 25  | 90    |
+| Mary | 30  | 95    |
+
+: Note: Simple Markdown tables cannot be cross-referenced in Quarto.
+
+### B. Tables from R (MOST COMMON)
+
+```{r}
+#| label: setup
+#| include: false
+# Load libraries and create data
+library(knitr)
+students <- data.frame(
+  Name = c("John", "Mary"),
+  Age = c(25, 30),
+  Score = c(90, 95)
+)
+```
+
+```{r}
+#| label: tbl-students
+#| tbl-cap: "Student Scores"
+   kable(students)
+```
+
+Reference as:
+
+See Table @tbl-students.
+
+## Code Chunks
+
+Code that appears in your rendered doc
+
+```{r my-chunk, message=FALSE, warning=FALSE}
+```
+
+`{# This code will appear in the final rendered document} print("Hello Quarto!")`
+
+Codes that are excluded from the final document
+
+```{r fig-starwars, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Relationship between height and mass of Star Wars characters"}
+library(dplyr)
+library(ggplot2)
+
+starwars %>%
+  filter(mass < 100) %>%
+  ggplot(aes(x = mass, y = height, color = gender)) +
+  geom_point(size = 3, alpha = 0.5) +
+  geom_smooth() +
+  theme_bw() +
+  labs(
+    title = "Height vs Mass of Star Wars Characters",
+    x = "Mass",
+    y = "Height",
+    color = "Gender"
+  )
+```
+
+## Code included in Text
+
+The average height of star-wars characters is `r round(mean(starwars$height,na.rm=TRUE)/100,2)` in meters.
+
+## Cross Referencing
+
+Here is a reference to @fig-starwars
+
+## How about a call out?
+
+::: callout-warning
+## remember to use sunscreen
+:::
+
+## Add a bibliography
+
+Here is some text with citations about R programming .
+
+## Bibliography
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
